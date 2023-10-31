@@ -1,4 +1,4 @@
-# mage-streaming
+# Redpanda streaming POC
 
 
 
