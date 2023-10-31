@@ -17,7 +17,7 @@ class TestTripGenerator(unittest.TestCase):
         
     def test_generate_trip(self):
         trip_data = generate_trip()
-        expected_keys = {'trip_id', 'user_id', 'start_timestamp', 'end_timestamp','trip_duration', 'trip_distance', 'trip_price'}
+        expected_columns = {'trip_id', 'user_id', 'start_timestamp', 'end_timestamp','trip_duration', 'trip_distance', 'trip_price'}
         self.assertEqual(set(trip_data.keys()),expected_keys)
         
     def test_trip_distance_limits(self):
