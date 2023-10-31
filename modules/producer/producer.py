@@ -18,9 +18,12 @@ logger = logging.getLogger(__name__)
 
 
 # Define an enum for message format
-class MessageFormat:
-    JSON = "json"
-    AVRO = "avro"  # If you use Avro, you need to set up a schema registry.
+class CLI_parameters:
+    MSG_FORMAT_JSON = "json"
+    MSG_FORMAT_AVRO = "avro"
+    TOPIC = 'trips'
+    MSG_COUNT = 1000
+    MSG_INTERVAL = 0.1
 
 
 # Command-line argument parser
@@ -31,10 +34,10 @@ def parse_args():
         default="localhost:19092",
         help="Kafka broker address (comma-separated)"
     )
-    parser.add_argument('--topic', required=True, help='Kafka topic to produce messages to')
-    parser.add_argument('--message-format',default=MessageFormat.JSON, help='Message format (json/avro)')
-    parser.add_argument('--message-count', type=int, default=10000, help='Number of messages to send')
-    parser.add_argument('--message-interval', type=float, default=0.1, help='Interval between messages (in seconds)')
+    parser.add_argument('--topic', required=True, default=CLI_parameters.TOPIC, help='Kafka topic to produce messages to')
+    parser.add_argument('--message-format',default=CLI_parameters.MSG_FORMAT_JSON, help='Message format (json/avro)')
+    parser.add_argument('--message-count', type=int, default=CLI_parameters.MSG_COUNT, help='Number of messages to send')
+    parser.add_argument('--message-interval', type=float, default=CLI_parameters.MSG_INTERVAL, help='Interval between messages (in seconds)')
     return parser.parse_args()
 
 def on_success(metadata):
