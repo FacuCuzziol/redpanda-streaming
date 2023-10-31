@@ -1,6 +1,14 @@
 import unittest
 import sys 
 from modules.trip.trip_generator import Trip, generate_trip, TripDistanceLimits
+import configparser
+import os
+# Determine the path to the configuration file
+config_file_path = 'config/config.ini'
+# Initialize the configparser
+config = configparser.ConfigParser()
+# Read the configuration file
+config.read(config_file_path)
 
 
 class TestTripGenerator(unittest.TestCase):
@@ -17,8 +25,8 @@ class TestTripGenerator(unittest.TestCase):
         
     def test_generate_trip(self):
         trip_data = generate_trip()
-        expected_columns = {'trip_id', 'user_id', 'start_timestamp', 'end_timestamp','trip_duration', 'trip_distance', 'trip_price'}
-        self.assertEqual(set(trip_data.keys()),expected_keys)
+        expected_columns = set(config.get('trip_data', 'expected_columns').split(','))
+        self.assertEqual(set(trip_data.keys()),expected_columns)
         
     def test_trip_distance_limits(self):
         self.assertGreaterEqual(self.trip.trip_distance, TripDistanceLimits.MIN_DISTANCE)
