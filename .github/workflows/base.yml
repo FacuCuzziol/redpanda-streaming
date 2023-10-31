@@ -37,7 +37,17 @@ jobs:
   modules-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Test Trip Generator module
-        id: trip_generator_tests
-        run: python3 -m tests.test_trip_generator
+      - name: Checkout repo for running module tests
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11  # Use the appropriate Python version
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt  
+
+      - name: Run Trip Generator module tests
+        run: python -m unittest discover -s tests  # Use unittest test discovery
         
